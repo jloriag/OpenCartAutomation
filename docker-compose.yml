@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8000:80"  # Exponer Apache en el puerto 80 del contenedor
+    environment:
+      - ENV=development
+    volumes:
+      - .:/var/www/html  # Montar el código de la aplicación
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: admin  # Base de datos que se creará al iniciar
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"  # Exponer MySQL en el puerto 3306
+    volumes:
+      - dbdata:/var/lib/mysql  # Persistir los datos de MySQL
+
+volumes:
+  dbdata:
